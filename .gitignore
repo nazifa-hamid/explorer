@@ -8,5 +8,6 @@ __pycache__/
 htmlcov/
 .ruff_cache/
 .DS_Store
-README.md.bkup
+README.md.bk*
 PLAN.md
+*.mov

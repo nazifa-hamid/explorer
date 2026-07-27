@@ -309,7 +309,7 @@ def models() -> None:
 
 
 @app.command("check")
-def check(model: str = typer.Option("glm", help="glm | local | gemini")) -> None:
+def check(model: str = typer.Option("gemini", help="gemini | local | glm")) -> None:
     """Verify a model can execute a tool call AND accept the result back.
 
     Two turns, not one, and the second turn is the point. A single call proves very
