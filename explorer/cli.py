@@ -259,18 +259,18 @@ def replay(run_id: str = typer.Argument(..., help="Run id printed by `research`.
 
 @app.command("show-graph")
 def show_graph() -> None:
-    """Print the graph as Mermaid, to paste into a README or mermaid.live."""
+    """Print the graph as Mermaid."""
     graph = build_graph()
     console.print(graph.get_graph().draw_mermaid())
 
 
 @app.command("models")
 def models() -> None:
-    """List the Gemini models your key can actually use, with their real IDs.
+    """Lists Gemini models available for use.
 
     Model IDs are not guessable ("gemini-3-flash" does not exist; "gemini-3.6-flash"
     does) and aliases like -latest resolve to whatever is newest, which tends to have
-    the smallest free-tier quota. This asks the API instead of guessing. Pick one and
+    the smallest free-tier quota. This asks the API for model list. Pick one and
     set GEMINI_MODEL in .env.
     """
     import os
@@ -310,7 +310,7 @@ def models() -> None:
 
 @app.command("check")
 def check(model: str = typer.Option("glm", help="glm | local | gemini")) -> None:
-    """Verify a model can emit a tool call AND accept the result back.
+    """Verify a model can execute a tool call AND accept the result back.
 
     Two turns, not one, and the second turn is the point. A single call proves very
     little: providers that mangle tool-call history only fail when you replay it.
