@@ -33,15 +33,6 @@ The graph binds it with constraints to stop it from:
 
 ```
 
-It is bound by the max turns (12) it can take, after which it must produce. At each turn
-it is reminded of the state and position it is in: how many turns are left, how many
-notes it has saved and which sub-questions it has left unanswered. If it tries to
-fetch a page it has already read, the fetch is refused. If it tries to search again
-while it still has unread results in hand, the search is refused and it is shown the
-URLs it hasn't opened yet. And when it tries to finish with nothing in its notes, or
-with sub-questions still unanswered, it is nudged back to work as long as it has
-turns left to spend.
-
 ## Lessons
 
 I built explorer to understand the mechanics of an agent and make it visible, what the model decides, what code controls and the change of state. I observed that the LLM was unreliable in holding sense of position or state. It did not reliably keep track of its progress unless the state was made explicit. It kept wanting to finish without producing an output, and had to be nudged back into action. During the first run, saving notes from the web pages it read wasn't bound by a rule, only advised in the prompt, so it saved nothing and produced nothing. The model also researched based on what it already knows but its knowledge had a cutoff so it queried based on stale knowledge and drifted further and further away from the right answer. So, recency filters were enforced by the graph to make the agent stay on track. I realised that relying on prompting alone was not enough to keep the agent on track. Bookkeeping and workflow constraints had to be encoded in its behaviour to make it more dependable.
