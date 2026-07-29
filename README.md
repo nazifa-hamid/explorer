@@ -35,7 +35,17 @@ The graph binds it with constraints to stop it from:
 
 ## Lessons
 
-I built explorer to understand the mechanics of an agent and make it visible, what the model decides, what code controls and the change of state. I observed that the LLM was unreliable in holding sense of position or state. It did not reliably keep track of its progress unless the state was made explicit. It kept wanting to finish without producing an output, and had to be nudged back into action. During the first run, saving notes from the web pages it read wasn't bound by a rule, only advised in the prompt, so it saved nothing and produced nothing. The model also researched based on what it already knows but its knowledge had a cutoff so it queried based on stale knowledge and drifted further and further away from the right answer. So, recency filters were enforced by the graph to make the agent stay on track. I realised that relying on prompting alone was not enough to keep the agent on track. Bookkeeping and workflow constraints had to be encoded in its behaviour to make it more dependable.
+### Decide which behaviours are suggestions and which must be complied
+
+During the first run the model was only prompted to save notes from each page. Although it understood the rule, several turns later it was neglected. Further prompting only improved little. Enforcing note-taking in the graph solved the problem. Therefore, if there's a rule that genuinely matters, it has to be put in the control flow
+
+### LLMs do not reliably hold a sense of position or state 
+
+Conversation history contained the number of urls it fetched, pages it read and the turns completed but the model did not reliably notice or put them together to keep track of its progress. In one run, out of 12 turns it spent all 12 only web searching, reading nothing and producing nothing. I then put a small progress block that gets rebuilt every turn: current turn, remaining budget, notes saved, pages read, unread urls, plan coverage and the useful next action. Bookkeeping had to be coded in the workflow constraints to make it more dependable.
+
+### Constraints do not ensure research quality:
+
+The graph made sure every plan number had a note but cannot prove the plan was good or the note saved was the most useful. Plan coverage improved reliability but worked as only a structural check. A better research system would check source diversity, note relevance and whether the original plan represents the question well.
 
 ## How it works
 
