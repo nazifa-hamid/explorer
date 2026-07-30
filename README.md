@@ -37,11 +37,11 @@ The graph binds it with constraints to stop it from:
 
 **1. Decide which behaviours are suggestions and which must be complied**
 
-During the first run the model was only prompted to save notes from each page. Although it understood the rule, several turns later it was neglected. Further prompting only improved little. Enforcing note-taking in the graph solved the problem. Therefore, if there's a rule that genuinely matters, it has to be put in the control flow
+During the first run the model was only prompted to save notes from each page. Despite understanding the rule, model ended up neglecting it several turns later. Further prompting resulted in little improvement until enforcing the note-taking rule in graph solved the problem. System prompts compete against long page results, conversation history, changing states etc. If a rule genuinely matters, it has to be put in the control flow
 
 **2. LLMs do not reliably hold a sense of position or state**
 
-Conversation history contained the number of urls it fetched, pages it read and the turns completed but the model did not reliably notice or put them together to keep track of its progress. In one run, out of 12 turns it spent all 12 only web searching, reading nothing and producing nothing. I then put a small progress block that gets rebuilt every turn: current turn, remaining budget, notes saved, pages read, unread urls, plan coverage and the useful next action. Bookkeeping had to be coded in the workflow constraints to make it more dependable.
+Conversation history contained the number of urls it fetched, pages it read and the turns completed but the model did not reliably notice or put them together to keep track of its progress. In one run, it spent all of the 13 runs only web searching, reading nothing and producing nothing. I then put a small progress block that gets rebuilt every turn: current turn, remaining budget, notes saved, pages read, unread urls, plan coverage and the useful next action. Bookkeeping had to be coded in the workflow constraints to make it more dependable.
 
 **3. Constraints do not ensure research quality**
 
